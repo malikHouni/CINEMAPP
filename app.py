@@ -106,5 +106,6 @@ def pires():
 
 # main pour lancer le server
 if __name__ == '__main__':
-    # Lance le serveur local et en mode debug, a changer peut etre une fois sur render...
-    app.run(debug=True, port=5000)
+    # on ecoute sur 0.0.0.0 et sur le port de render pour que ca marche en ligne
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
