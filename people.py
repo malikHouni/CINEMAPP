@@ -38,13 +38,22 @@ def clean_cell(data_cell):
 def get_person_info(name):
     try:
         api_url = f"https://fr.wikipedia.org/w/api.php?action=opensearch&search={name}&limit=1&format=json"
-        search_response = requests.get(api_url, headers={"User-Agent": "Mozilla/5.0"}).json()
+        # user agent plus precis pour pas se faire bloquer sur render
+        headers = {"User-Agent": "ProjetCinemaApp/1.0 (contact@cinemaapp.com; Projet Etudiant)"}
+        res = requests.get(api_url, headers=headers)
+        if res.status_code != 200:
+            return None, f"Wikipedia a renvoye une erreur (Status {res.status_code})"
+        
+        try:
+            search_response = res.json()
+        except ValueError:
+            return None, "Erreur de lecture des donnees Wikipedia (bloque par Wikipedia?)"
+            
         if not search_response or not search_response[3]: 
             return None, "Personne non trouvée"
         
-        
         wikipedia_url = search_response[3][0]
-        page_soup = BeautifulSoup(requests.get(wikipedia_url, headers={"User-Agent": "Mozilla/5.0"}).content, "html.parser")
+        page_soup = BeautifulSoup(requests.get(wikipedia_url, headers=headers).content, "html.parser")
         
         person_data = {
             "name": search_response[1][0], 
