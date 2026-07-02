@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Comparer des Films - Projet Cinéma{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <h2 class="mb-4" style="text-align:center;">Comparer deux Films</h2>
+        
+        <!-- Search/Compare Form -->
+        <form method="POST" action="/comparer" class="mb-4">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-5">
+                    <input type="text" name="title1" class="form-control" placeholder="Premier film (ex: batman)" value="{{ title1 or '' }}" required>
+                </div>
+                <div class="col-md-2 text-center">
+                    <span class="fs-4 fw-bold">VS</span>
+                </div>
+                <div class="col-md-5">
+                    <input type="text" name="title2" class="form-control" placeholder="Deuxième film (ex: gladiator)" value="{{ title2 or '' }}" required>
+                </div>
+                <div class="col-12 text-center mt-3">
+                    <button class="btn btn-primary btn-lg px-5" type="submit">Comparer les films</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Error Message -->
+        {% if error %}
+        <div class="alert alert-danger shadow-sm" role="alert">
+             {{ error }}
+        </div>
+        {% endif %}
+
+        <!-- Comparison Table -->
+        {% if movie1 and movie2 %}
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-dark text-white text-center">
+                <h4 class="mb-0 fw-bold">Résultats de la comparaison</h4>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th style="width: 20%;">Critère</th>
+                                <th class="text-center" style="width: 40%;">{{ movie1.Title }}</th>
+                                <th class="text-center" style="width: 40%;">{{ movie2.Title }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Poster -->
+                            <tr>
+                                <th scope="row">Affiche</th>
+                                <td class="text-center">
+                                    {% if movie1.Poster and movie1.Poster != 'N/A' %}
+                                        <img src="{{ movie1.Poster }}" class="img-thumbnail" style="max-height: 200px;" alt="Affiche de {{ movie1.Title }}">
+                                    {% else %}
+                                        <span class="text-muted">Aucune affiche</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {% if movie2.Poster and movie2.Poster != 'N/A' %}
+                                        <img src="{{ movie2.Poster }}" class="img-thumbnail" style="max-height: 200px;" alt="Affiche de {{ movie2.Title }}">
+                                    {% else %}
+                                        <span class="text-muted">Aucune affiche</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <!-- Year -->
+                            <tr>
+                                <th scope="row">Année</th>
+                                <td class="text-center {% if winners.Year == 1 %}table-success fw-bold{% endif %}">{{ movie1.Year }}</td>
+                                <td class="text-center {% if winners.Year == 2 %}table-success fw-bold{% endif %}">{{ movie2.Year }}</td>
+                            </tr>
+                            <!-- Director -->
+                            <tr>
+                                <th scope="row">Réalisateur</th>
+                                <td class="text-center">{{ movie1.Director }}</td>
+                                <td class="text-center">{{ movie2.Director }}</td>
+                            </tr>
+                            <!-- Runtime -->
+                            <tr>
+                                <th scope="row">Durée</th>
+                                <td class="text-center {% if winners.Runtime == 1 %}table-success fw-bold{% endif %}">{{ movie1.Runtime }}</td>
+                                <td class="text-center {% if winners.Runtime == 2 %}table-success fw-bold{% endif %}">{{ movie2.Runtime }}</td>
+                            </tr>
+                            <!-- Genre -->
+                            <tr>
+                                <th scope="row">Genre</th>
+                                <td class="text-center">{{ movie1.Genre }}</td>
+                                <td class="text-center">{{ movie2.Genre }}</td>
+                            </tr>
+                            <!-- IMDb Rating -->
+                            <tr>
+                                <th scope="row">Note IMDb</th>
+                                <td class="text-center {% if winners.imdbRating == 1 %}table-success fw-bold{% endif %}">{{ movie1.imdbRating }}/10</td>
+                                <td class="text-center {% if winners.imdbRating == 2 %}table-success fw-bold{% endif %}">{{ movie2.imdbRating }}/10</td>
+                            </tr>
+                            <!-- Box Office -->
+                            <tr>
+                                <th scope="row">Box-office</th>
+                                <td class="text-center {% if winners.BoxOffice == 1 %}table-success fw-bold{% endif %}">{{ movie1.BoxOffice or 'N/A' }}</td>
+                                <td class="text-center {% if winners.BoxOffice == 2 %}table-success fw-bold{% endif %}">{{ movie2.BoxOffice or 'N/A' }}</td>
+                            </tr>
+                            <!-- Budget -->
+                            <tr>
+                                <th scope="row">Budget</th>
+                                <td class="text-center {% if winners.Budget == 1 %}table-success fw-bold{% endif %}">{{ movie1.Budget or 'N/A' }}</td>
+                                <td class="text-center {% if winners.Budget == 2 %}table-success fw-bold{% endif %}">{{ movie2.Budget or 'N/A' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer bg-light text-center py-2">
+                <span class="badge bg-success">&nbsp;</span> Case verte = Le film avec meilleur critère!
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

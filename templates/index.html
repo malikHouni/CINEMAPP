@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - Projet Cinéma{% endblock %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-white rounded-3 shadow-sm">
+    <div class="container-fluid py-5"  style="text-align:center;">
+        <h1 class="display-5 fw-bold">Bienvenue sur CinémaApp <img src="https://media.istockphoto.com/id/1207316492/fr/vectoriel/imprimer.jpg?s=612x612&w=0&k=20&c=o1L35rrKY0F21gZAaXD0_IhPJ2o1FpTOBrBJvah79P0=" style="width:3em;height:3em;"></h1>
+        <p class="col-md-8 fs-4">Application web pour rechercher des films et avoir des informations.</p>
+        <hr class="my-4">
+        <p></p>
+    </div>
+</div>
+
+<div class="row align-items-stretch">
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">🔍 Rechercher un Film</h5>
+                <p class="card-text text-muted">Trouvez des informations sur un film(affiche, cast,commentaires...).</p>
+                <a href="/film" class="btn btn-primary mt-auto">Aller à la recherche</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Rechercher une Personne</h5>
+                <p class="card-text text-muted">Rechercher des personnes liées au films</p>
+                <a href="/personne" class="btn btn-primary mt-auto">Recherche personne</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Comparer des Films</h5>
+                <p class="card-text text-muted">Comparer les films par notes, budget,...</p>
+                <a href="/comparer" class="btn btn-primary mt-auto">Aller à la comparaison</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card h-100 shadow-sm border-danger">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-danger">Les Pires Films</h5>
+                <p class="card-text text-muted">Le Top 10 des pires films de tous les temps ou par année.</p>
+                <a href="/pires" class="btn btn-danger mt-auto">Voir les pires films</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

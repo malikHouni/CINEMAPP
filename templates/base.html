@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Projet Cinéma{% endblock %}</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">Cinéma App projet - </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/film' %}active{% endif %}" href="/film">Film</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/personne' %}active{% endif %}" href="/personne">Personne</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/comparer' %}active{% endif %}" href="/comparer">Comparaison</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/pires' %}active{% endif %}" href="/pires">Pires Films</a>
+                    </li>
+                </ul>
+            </div>
+            <span style="float:right; color:#fff;">par Malik HOUNI 2026</span>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="container mb-5">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap JS Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

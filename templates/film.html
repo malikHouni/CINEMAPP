@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Recherche de Film - Projet Cinéma{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h2 class="mb-4">Rechercher un Film</h2>
+        
+        <!-- form de recherche -->
+        <form method="POST" action="/film" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="title" class="form-control" placeholder="Entrez le titre d'un film (ex: Batman, Gladiator...)" value="{{ title or '' }}" required>
+                <button class="btn btn-primary" type="submit">Rechercher</button>
+            </div>
+        </form>
+
+        <!-- Error Message -->
+        {% if error %}
+        <div class="alert alert-danger shadow-sm" role="alert">
+             {{ error }}
+        </div>
+        {% endif %}
+
+        <!-- Details du film -->
+        {% if movie %}
+        <div class="card shadow-sm mb-4">
+            <div class="row g-0">
+                <div class="col-md-4 bg-dark d-flex align-items-center justify-content-center p-3">
+                    {% if movie.Poster and movie.Poster != 'N/A' %}
+                        <img src="{{ movie.Poster }}" class="img-fluid rounded shadow" alt="Affiche de {{ movie.Title }}">
+                    {% else %}
+                        <div class="text-white text-center py-5">
+                            <span class="fs-1"></span>
+                            <p class="mt-2">Aucune affiche disponible</p>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h3 class="card-title fw-bold">{{ movie.Title }} <small class="text-muted">({{ movie.Year }})</small></h3>
+                        <p class="card-text"><span class="badge bg-secondary">{{ movie.Genre }}</span> <span class="badge bg-info text-dark">{{ movie.Runtime }}</span></p>
+                        <hr>
+                        <p class="card-text"><strong>Réalisateur :</strong> {{ movie.Director }}</p>
+                        <p class="card-text"><strong>Acteurs :</strong> {{ movie.Actors }}</p>
+                        
+                        <p class="card-text"><strong>Synopsis :</strong> {{ movie.Plot }}</p>
+                        <p class="card-text"><strong>Note IMDb :</strong> {{ movie.imdbRating }} /10 ({{ movie.imdbVotes }} votes)</p>
+                        
+                        <p class="card-text"><strong>Box-office :</strong> {{ movie.BoxOffice or 'N/A' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section les commentaires -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">Derniers commentaires spectateurs Rotten Tomatoes</h5>
+            </div>
+            <div class="card-body">
+                {% if reviews %}
+                    <ul class="list-group list-group-flush">
+                        {% for review in reviews %}
+                            <li class="list-group-item py-3">
+                                <p class="mb-1 text-secondary"><em>{{ review }}</em></p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted mb-0">Aucun commentaire trouvé.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

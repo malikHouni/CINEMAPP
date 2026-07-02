@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Recherche de Personnalité - Projet Cinéma{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <h2 class="mb-4">Rechercher une Personne</h2>
+        
+        <!-- Form -->
+        <form method="POST" action="/personne" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="name" class="form-control" placeholder="Entrez le nom d'une personnalité " value="{{ name or '' }}" required>
+                <button class="btn btn-primary" type="submit">Rechercher</button>
+            </div>
+        </form>
+
+        <!-- Error Message -->
+        {% if error %}
+        <div class="alert alert-danger shadow-sm" role="alert">
+             {{ error }}
+        </div>
+        {% endif %}
+
+        <!-- Person info -->
+        {% if person %}
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0 fw-bold">{{ person.name }}</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- Photo  -->
+                    <div class="col-md-4 mb-3 text-center">
+                        {% if person.photo_url %}
+                            <img src="{{ person.photo_url }}" class="img-fluid img-thumbnail rounded shadow-sm" alt="Photo de {{ person.name }}">
+                        {% else %}
+                            <div class="bg-secondary text-white rounded d-flex align-items-center justify-content-center py-5 shadow-sm">
+                                <span class="fs-1"></span>
+                            </div>
+                            <p class="text-muted mt-2 small">Aucune photo trouvée sur Wiki</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- age, profession...-->
+                    <div class="col-md-8">
+                        <table class="table table-borderless">
+                            <tbody>
+                                {% if person.age %}
+                                <tr>
+                                    <th scope="row" style="width: 30%;">Âge :</th>
+                                    <td>{{ person.age }} ans</td>
+                                </tr>
+                                {% endif %}
+                                {% if person.profession %}
+                                <tr>
+                                    <th scope="row">Profession(s) :</th>
+                                    <td>{{ person.profession }}</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                        
+                        {% if person.notable_works %}
+                        <div class="mb-4">
+                            <h5 class="fw-bold">Œuvres notables</h5>
+                            <ul class="list-group">
+                                {% for work in person.notable_works %}
+                                    <li class="list-group-item">{{ work }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Section de la bio de la personne -->
+                {% if person.biography %}
+                <div class="mt-4 border-top pt-3">
+                    <h5 class="fw-bold">Biographie</h5>
+                    <p class="text-justify lead fs-6" style="line-height: 1.6;">{{ person.biography }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
